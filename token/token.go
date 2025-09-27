@@ -15,10 +15,9 @@ const (
 	// Identifiers + literals
 	IDENT = "IDENT"
 	INT   = "INT"
-	SRING = "STRING"
+	STRING = "STRING"
 	TRUE  = "TRUE"
 	FALSE = "FALSE"
-	BOOL  = "BOOL"
 
 	// Operators
 	ASSIGN    = "="
@@ -27,7 +26,6 @@ const (
 	MULT      = "*"
 	DIV       = "/"
 	EQ        = "=="
-	NOTEQ     = "!="
 	LESSTHAN  = "<"
 	GREATTHAN = ">"
 	LESSEQ    = "<="
@@ -54,3 +52,35 @@ const (
 	ELSE     = "ELSE"
 	PRIVATE  = "PRV"
 )
+
+var keywords = map[string]TokenType{
+	"fnc":    FUNCTION,
+	"var":    VAR,
+	"val":    VAL,
+	"return": RETURN,
+	"if":     IF,
+	"else":   ELSE,
+	"prv":    PRIVATE,
+	"true":   TRUE,
+    "false":  FALSE,
+}
+
+func LookupIdent(ident string) TokenType {
+	if tok, ok := keywords[ident]; ok {
+		return tok
+	}
+	return IDENT
+}
+
+var comparators = map[string]TokenType{
+	"==": EQ,
+	"<=": LESSEQ,
+	">=": GREATEQ,
+}
+
+func LookUpComparator(comp string) TokenType {
+	if tok, ok := comparators[comp]; ok {
+		return tok
+	}
+	return ILLEGAL
+}
