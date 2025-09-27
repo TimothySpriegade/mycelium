@@ -1,4 +1,10 @@
-## mycelium: The underground network for your code
+<div align="center">
+    <h2>
+        <img src=".github/readme/Banner.png" alt="mycelium Banner">
+        <br/>
+        <strong>the underground network for your code.</strong>
+    </h2>
+</div>
 
 Mycelium is a small, simple programming language created as a personal project to learn about language design, interpreters, and what goes on under the hood of my favorite programming languages.
 
