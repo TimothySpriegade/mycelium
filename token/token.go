@@ -13,11 +13,11 @@ const (
 	EOF     = "EOF"
 
 	// Identifiers + literals
-	IDENT = "IDENT"
-	INT   = "INT"
+	IDENT  = "IDENT"
+	INT    = "INT"
 	STRING = "STRING"
-	TRUE  = "TRUE"
-	FALSE = "FALSE"
+	TRUE   = "TRUE"
+	FALSE  = "FALSE"
 
 	// Operators
 	ASSIGN    = "="
@@ -25,12 +25,13 @@ const (
 	MINUS     = "-"
 	MULT      = "*"
 	DIV       = "/"
+	BACKSLASH = "\\"
 	EQ        = "=="
 	LESSTHAN  = "<"
 	GREATTHAN = ">"
 	LESSEQ    = "<="
 	GREATEQ   = ">="
-	NOT       = "!"
+	BANG      = "!"
 
 	// Delimiters
 	COMMA        = ","
@@ -62,7 +63,7 @@ var keywords = map[string]TokenType{
 	"else":   ELSE,
 	"prv":    PRIVATE,
 	"true":   TRUE,
-    "false":  FALSE,
+	"false":  FALSE,
 }
 
 func LookupIdent(ident string) TokenType {

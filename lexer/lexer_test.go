@@ -6,6 +6,76 @@ import (
 	"mycelium/token"
 )
 
+func TestNextToken2(t *testing.T) {
+	input := `
+	val mult: int = 5 * 5
+	var div: int = 5 / 5
+
+	if (mult !>= div) [
+		return mult, 
+	] else {
+		return div.
+	}
+	\\
+	<=
+`
+	tests := []struct {
+		expectedType    token.TokenType
+		expectedLiteral string
+	}{
+		{token.VAL, "val"},
+		{token.IDENT, "mult"},
+		{token.COLON, ":"},
+		{token.IDENT, "int"},
+		{token.ASSIGN, "="},
+		{token.INT, "5"},
+		{token.MULT, "*"},
+		{token.INT, "5"},
+		{token.VAR, "var"},
+		{token.IDENT, "div"},
+		{token.COLON, ":"},
+		{token.IDENT, "int"},
+		{token.ASSIGN, "="},
+		{token.INT, "5"},
+		{token.DIV, "/"},
+		{token.INT, "5"},
+		{token.IF, "if"},
+		{token.OBRACKET, "("},
+		{token.IDENT, "mult"},
+		{token.BANG, "!"},
+		{token.GREATEQ, ">="},
+		{token.IDENT, "div"},
+		{token.CBRACKET, ")"},
+		{token.OCORNBRACKET, "["},
+		{token.RETURN, "return"},
+		{token.IDENT, "mult"},
+		{token.COMMA, ","},
+		{token.CCORNBRACKE, "]"},
+		{token.ELSE, "else"},
+		{token.OCURLBRACKET, "{"},
+		{token.RETURN, "return"},
+		{token.IDENT, "div"},
+		{token.ILLEGAL, "."},
+		{token.CCURLBRACKET, "}"},
+		{token.BACKSLASH, "\\"},
+		{token.BACKSLASH, "\\"},
+		{token.LESSEQ, "<="},
+		{token.EOF, ""},
+	}
+	lex := New(input)
+	for i, tokentype := range tests {
+		tok := lex.NextToken()
+		if tok.Type != tokentype.expectedType {
+			t.Fatalf("tests[%d] - tokentype wrong. expected=%q, got=%q",
+				i, tokentype.expectedType, tok.Type)
+		}
+		if tok.Literal != tokentype.expectedLiteral {
+			t.Fatalf("tests[%d] - literal wrong. expected=%q, got=%q",
+				i, tokentype.expectedLiteral, tok.Literal)
+		}
+	}
+}
+
 func TestNextToken(t *testing.T) {
 	input := `var varname: string = "test";
     val valname: int = 5;

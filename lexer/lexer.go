@@ -25,7 +25,7 @@ func (lex *Lexer) NextToken() token.Token {
 	case '=':
 		if isComparator(lex.ch) {
 			tok.Literal = lex.readComparator()
-			if (len(tok.Literal) == 2){
+			if len(tok.Literal) == 2 {
 				tok.Type = token.LookUpComparator(tok.Literal)
 				return tok
 			}
@@ -40,10 +40,12 @@ func (lex *Lexer) NextToken() token.Token {
 		tok = newToken(token.MULT, lex.ch)
 	case '/':
 		tok = newToken(token.DIV, lex.ch)
+	case '\\':
+		tok = newToken(token.BACKSLASH, lex.ch)
 	case '<':
 		if isComparator(lex.ch) {
 			tok.Literal = lex.readComparator()
-			if (len(tok.Literal) == 2){
+			if len(tok.Literal) == 2 {
 				tok.Type = token.LookUpComparator(tok.Literal)
 				return tok
 			}
@@ -53,7 +55,7 @@ func (lex *Lexer) NextToken() token.Token {
 	case '>':
 		if isComparator(lex.ch) {
 			tok.Literal = lex.readComparator()
-			if (len(tok.Literal) == 2){
+			if len(tok.Literal) == 2 {
 				tok.Type = token.LookUpComparator(tok.Literal)
 				return tok
 			}
@@ -61,7 +63,7 @@ func (lex *Lexer) NextToken() token.Token {
 		}
 		return tok
 	case '!':
-		tok = newToken(token.NOT, lex.ch)
+		tok = newToken(token.BANG, lex.ch)
 	case ',':
 		tok = newToken(token.COMMA, lex.ch)
 	case ';':
