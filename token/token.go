@@ -32,6 +32,7 @@ const (
 	LESSEQ    = "<="
 	GREATEQ   = ">="
 	BANG      = "!"
+	NOTEQ     = "!="
 
 	// Delimiters
 	COMMA        = ","

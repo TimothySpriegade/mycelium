@@ -18,6 +18,7 @@ func TestNextToken2(t *testing.T) {
 	}
 	\\
 	<=
+	!=
 `
 	tests := []struct {
 		expectedType    token.TokenType
@@ -60,6 +61,7 @@ func TestNextToken2(t *testing.T) {
 		{token.BACKSLASH, "\\"},
 		{token.BACKSLASH, "\\"},
 		{token.LESSEQ, "<="},
+		{token.NOTEQ, "!="},
 		{token.EOF, ""},
 	}
 	lex := New(input)

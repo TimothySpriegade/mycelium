@@ -8,7 +8,7 @@ import (
 type Lexer struct {
 	input        string
 	position     int  // current position in input
-	readPosition int  // points to the h after position
+	nextPosition int  // points to the h after position
 	ch           byte // current char
 }
 
@@ -63,6 +63,14 @@ func (lex *Lexer) NextToken() token.Token {
 		}
 		return tok
 	case '!':
+		if lex.peekChar() == '=' {
+			tok.Type = token.NOTEQ
+			bangposition := lex.position
+			lex.readChar()
+			lex.readChar()
+			tok.Literal = lex.input[bangposition:lex.position]
+			return tok
+		}
 		tok = newToken(token.BANG, lex.ch)
 	case ',':
 		tok = newToken(token.COMMA, lex.ch)
@@ -147,13 +155,13 @@ func (lex *Lexer) readComparator() string {
 }
 
 func (lex *Lexer) readChar() {
-	if lex.readPosition >= len(lex.input) {
+	if lex.nextPosition >= len(lex.input) {
 		lex.ch = 0
 	} else {
-		lex.ch = lex.input[lex.readPosition]
+		lex.ch = lex.input[lex.nextPosition]
 	}
-	lex.position = lex.readPosition
-	lex.readPosition += 1
+	lex.position = lex.nextPosition
+	lex.nextPosition += 1
 }
 
 func (lex *Lexer) readNumber() string {
@@ -162,6 +170,14 @@ func (lex *Lexer) readNumber() string {
 		lex.readChar()
 	}
 	return lex.input[position:lex.position]
+}
+
+func (lex *Lexer) peekChar() byte {
+	if lex.nextPosition >= len(lex.input) {
+		return 0
+	} else {
+		return lex.input[lex.nextPosition]
+	}
 }
 
 func isDigit(ch byte) bool {
