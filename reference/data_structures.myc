@@ -1,0 +1,7 @@
+val flags: array[3][bool] = [true, false, true];
+
+val permissions: map[string][bool] = {
+	"can_read": true,
+	"can_write": true,
+	"can_execute": false
+}

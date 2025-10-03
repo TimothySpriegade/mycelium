@@ -1,0 +1,7 @@
+// A mutable integer variable.
+var score: int = 100;
+score = score + 10; 
+
+// Immutable constant definitions
+val greeting: string = "Welcome to the forest!";
+val answer: int = 31 + 11;

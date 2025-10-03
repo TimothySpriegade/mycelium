@@ -1,0 +1,23 @@
+// A simple public function that adds two integers.
+fnc add(a: int, b: int): int {
+	return a + b;
+}
+
+// A private recursive function to calculate Fibonacci numbers.
+prv fnc fib(n: int): int {
+	if (n <= 1) {
+		return n;
+	}
+	return fib(n - 1) + fib(n - 2);
+}
+
+// higher order function
+prv fnc apply_and_multiply(f: fnc(int):int, x: int): int {
+	return f(x) * x;
+}
+
+fnc square(n: int): int {
+    return n * n;
+}
+
+val result = apply_and_multiply(square, 5); // result would be (5*5) * 5 = 125
