@@ -37,8 +37,18 @@ type VarDefinitionStatement struct {
 	Value Expression
 }
 
+type ValDefinitionStatement struct {
+	Token token.Token
+	Name  *Identifier
+	Type  *Identifier
+	Value Expression
+}
+
 func (varS *VarDefinitionStatement) statementNode()       {}
 func (varS *VarDefinitionStatement) TokenLiteral() string { return varS.Token.Literal }
+
+func (varS *ValDefinitionStatement) statementNode()       {}
+func (varS *ValDefinitionStatement) TokenLiteral() string { return varS.Token.Literal }
 
 func (p *Program) TokenLiteral() string {
 	if len(p.Statements) > 0 {

@@ -45,6 +45,8 @@ func (parser *Parser) parseStatement() ast.Statement {
 	switch parser.currentToken.Type {
 	case token.VAR:
 		return parser.parseVarStatement()
+	case token.VAL:
+		return parser.parseValStatement()
 	default:
 		return nil
 	}
@@ -52,6 +54,36 @@ func (parser *Parser) parseStatement() ast.Statement {
 
 func (parser *Parser) parseVarStatement() *ast.VarDefinitionStatement {
 	stmt := &ast.VarDefinitionStatement{Token: parser.currentToken}
+
+	if !parser.expectPeek(token.IDENT) {
+		return nil
+	}
+
+	stmt.Name = &ast.Identifier{Token: parser.currentToken, Value: parser.currentToken.Literal}
+
+	if !parser.expectPeek(token.COLON) {
+		return nil
+	}
+
+	if !parser.expectPeek(token.IDENT) {
+		return nil
+	}
+
+	stmt.Type = &ast.Identifier{Token: parser.currentToken, Value: parser.currentToken.Literal}
+
+	if !parser.expectPeek(token.ASSIGN) {
+		return nil
+	}
+	// TODO we skip expression for now and search straight for semicolon
+
+	for !parser.currentTokenIs(token.SEMICOLON) {
+		parser.nextToken()
+	}
+	return stmt
+}
+
+func (parser *Parser) parseValStatement() *ast.ValDefinitionStatement {
+	stmt := &ast.ValDefinitionStatement{Token: parser.currentToken}
 
 	if !parser.expectPeek(token.IDENT) {
 		return nil
