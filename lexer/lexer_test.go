@@ -8,7 +8,7 @@ import (
 
 func TestNextToken2(t *testing.T) {
 	input := `
-	val mult: int = 5 * 5
+	val mult: int = 5 * 5;
 	var div: int = 5 / 5
 
 	if (mult !>= div) [
@@ -32,6 +32,7 @@ func TestNextToken2(t *testing.T) {
 		{token.INT, "5"},
 		{token.MULT, "*"},
 		{token.INT, "5"},
+		{token.SEMICOLON, ";"},
 		{token.VAR, "var"},
 		{token.IDENT, "div"},
 		{token.COLON, ":"},

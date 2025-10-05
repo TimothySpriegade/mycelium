@@ -9,8 +9,10 @@ import (
 )
 
 func TestVarStatements(t *testing.T) {
-	input := `var testvar: int = 12'
-var testvar2: string = "test"`
+	input := `
+	var testvar: int = 12;
+	var testvartwo: int = "test";
+	`
 
 	lex := lexer.New(input)
 	pars := New(lex)
@@ -28,7 +30,7 @@ var testvar2: string = "test"`
 		expectedIdentifier string
 	}{
 		{"testvar"},
-		{"testvar2"},
+		{"testvartwo"},
 	}
 
 	for i, tt := range tests {

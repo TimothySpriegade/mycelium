@@ -12,7 +12,7 @@ var typesByName = map[string]validType{
 	"string": StringType,
 }
 
-func isValidType(name string) bool {
+func IsValidType(name string) bool {
 	_, ok := typesByName[name]
 	return ok
 }
