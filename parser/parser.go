@@ -1,25 +1,36 @@
 package parser
 
 import (
+	"fmt"
+
 	"mycelium/ast"
 	"mycelium/lexer"
 	"mycelium/token"
 )
 
 type Parser struct {
-	lex *lexer.Lexer
-
+	lex          *lexer.Lexer
+	errors       []string
 	currentToken token.Token
 	peekToken    token.Token
 }
 
 func New(lex *lexer.Lexer) *Parser {
-	parser := &Parser{lex: lex}
+	parser := &Parser{lex: lex, errors: []string{}}
 
 	parser.nextToken()
 	parser.nextToken()
 
 	return parser
+}
+
+func (parser *Parser) Errors() []string {
+	return parser.errors
+}
+
+func (parser *Parser) peekError(t token.TokenType) {
+	msg := fmt.Sprintf("expected next token to be %s, got %s instead", t, parser.peekToken.Type)
+	parser.errors = append(parser.errors, msg)
 }
 
 func (parser *Parser) nextToken() {
@@ -125,6 +136,7 @@ func (parser *Parser) expectPeek(token token.TokenType) bool {
 		parser.nextToken()
 		return true
 	} else {
+		parser.peekError(token)
 		return false
 	}
 }

@@ -8,6 +8,19 @@ import (
 	"mycelium/types"
 )
 
+func checkParserErrors(t *testing.T, pars *Parser) {
+	errors := pars.Errors()
+	if len(errors) == 0 {
+		return
+	}
+
+	t.Errorf("parser has %d errors", len(errors))
+	for _, msg := range errors {
+		t.Errorf("parser error: %q", msg)
+	}
+	t.FailNow()
+}
+
 func TestVarStatements(t *testing.T) {
 	input := `
 	var testvar: int = 12;
@@ -17,6 +30,7 @@ func TestVarStatements(t *testing.T) {
 	pars := New(lex)
 
 	program := pars.ParseProgram()
+	checkParserErrors(t, pars)
 	if program == nil {
 		t.Fatalf("ParseProgram() returned nil")
 	}
@@ -49,6 +63,8 @@ func TestValStatements(t *testing.T) {
 	pars := New(lex)
 
 	program := pars.ParseProgram()
+	checkParserErrors(t, pars)
+
 	if program == nil {
 		t.Fatalf("ParseProgram() returned nil")
 	}
@@ -79,7 +95,7 @@ func testVarAndValStatement(t *testing.T, statement ast.Statement, name string) 
 	}
 
 	valStmt, ok := statement.(*ast.ValDefinitionStatement)
-	
+
 	if !ok {
 		t.Errorf("statement is not *ast.ValDefinitionStatement got %d", statement)
 		return false
@@ -98,7 +114,6 @@ func testVarAndValStatement(t *testing.T, statement ast.Statement, name string) 
 	return true
 }
 
-
 func testVarAndVarStatement(t *testing.T, statement ast.Statement, name string) bool {
 	if statement.TokenLiteral() != "var" {
 		t.Errorf("statement.TokenLiteral not 'var' got=%q", statement.TokenLiteral())
@@ -106,7 +121,7 @@ func testVarAndVarStatement(t *testing.T, statement ast.Statement, name string) 
 	}
 
 	varStmt, ok := statement.(*ast.VarDefinitionStatement)
-	
+
 	if !ok {
 		t.Errorf("statement is not *ast.VarDefinitionStatement got %d", statement)
 		return false
