@@ -58,6 +58,8 @@ func (parser *Parser) parseStatement() ast.Statement {
 		return parser.parseVarStatement()
 	case token.VAL:
 		return parser.parseValStatement()
+	case token.RETURN:
+		return parser.parseReturnStatement()
 	default:
 		return nil
 	}
@@ -85,7 +87,7 @@ func (parser *Parser) parseVarStatement() *ast.VarDefinitionStatement {
 	if !parser.expectPeek(token.ASSIGN) {
 		return nil
 	}
-	// TODO we skip expression for now and search straight for semicolon
+	// TODO: we skip expression for now and search straight for semicolon
 
 	for !parser.currentTokenIs(token.SEMICOLON) {
 		parser.nextToken()
@@ -115,7 +117,20 @@ func (parser *Parser) parseValStatement() *ast.ValDefinitionStatement {
 	if !parser.expectPeek(token.ASSIGN) {
 		return nil
 	}
-	// TODO we skip expression for now and search straight for semicolon
+	// TODO: we skip expression for now and search straight for semicolon
+
+	for !parser.currentTokenIs(token.SEMICOLON) {
+		parser.nextToken()
+	}
+	return stmt
+}
+
+func (parser *Parser) parseReturnStatement() *ast.ReturnStatement {
+	stmt := &ast.ReturnStatement{Token: parser.currentToken}
+
+	parser.nextToken()
+
+	// TODO: still skipping expressions for now
 
 	for !parser.currentTokenIs(token.SEMICOLON) {
 		parser.nextToken()

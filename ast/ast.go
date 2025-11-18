@@ -47,8 +47,16 @@ type ValDefinitionStatement struct {
 func (varS *VarDefinitionStatement) statementNode()       {}
 func (varS *VarDefinitionStatement) TokenLiteral() string { return varS.Token.Literal }
 
-func (varS *ValDefinitionStatement) statementNode()       {}
-func (varS *ValDefinitionStatement) TokenLiteral() string { return varS.Token.Literal }
+func (valS *ValDefinitionStatement) statementNode()       {}
+func (valS *ValDefinitionStatement) TokenLiteral() string { return valS.Token.Literal }
+
+type ReturnStatement struct {
+	Token       token.Token
+	ReturnValue Expression
+}
+
+func (rs *ReturnStatement) statementNode()       {}
+func (rs *ReturnStatement) TokenLiteral() string { return rs.Token.Literal }
 
 func (p *Program) TokenLiteral() string {
 	if len(p.Statements) > 0 {

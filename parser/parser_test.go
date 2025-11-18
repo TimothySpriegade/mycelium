@@ -88,6 +88,36 @@ func TestValStatements(t *testing.T) {
 	}
 }
 
+func TestReturnStatements(t *testing.T) {
+	input := `
+	return 5;
+	return 12345;
+	return "alskjd";
+	`
+
+	lex := lexer.New(input)
+	pars := New(lex)
+
+	program := pars.ParseProgram()
+	checkParserErrors(t, pars)
+
+	if len(program.Statements) != 3 {
+		t.Fatalf("program.Statements does not contain 3 statements. got: %d", len(program.Statements))
+	}
+
+	for _, stmt := range program.Statements {
+		returnStmt, ok := stmt.(*ast.ReturnStatement)
+		if !ok {
+			t.Errorf("stmt not a ReturnStatement, got: %T", stmt)
+			continue
+		}
+		if returnStmt.TokenLiteral() != "return" {
+			t.Errorf("returnStmt.TokenLiteral not return, got: %q", returnStmt.TokenLiteral())
+		}
+
+	}
+}
+
 func testVarAndValStatement(t *testing.T, statement ast.Statement, name string) bool {
 	if statement.TokenLiteral() != "val" {
 		t.Errorf("statement.TokenLiteral not 'val' got=%q", statement.TokenLiteral())
