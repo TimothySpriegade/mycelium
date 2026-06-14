@@ -12,8 +12,6 @@ The interpreter was written in Go. Using [Writing an Interpreter in Go](https://
 
 Furthermore, the language will evolve from an interpreter language to an LLVM-compiled language, as I want to learn more about LLVM and how it works, and also to improve the language's performance.
 
----
-
 ## Table of Contents
 
 - [Overview](#overview)
@@ -31,8 +29,6 @@ Furthermore, the language will evolve from an interpreter language to an LLVM-co
 - [Project Architecture](#project-architecture)
 - [Roadmap](#roadmap)
 
----
-
 ## Overview
 
 Mycelium (`.myc`) is a statically-typed language with a clean, expressive syntax inspired by modern programming languages. It supports:
@@ -44,8 +40,6 @@ Mycelium (`.myc`) is a statically-typed language with a clean, expressive syntax
 - **Basic data structures** — typed arrays and maps
 - **Arithmetic and comparison operators**
 - **`if`/`else` control flow**
-
----
 
 ## Getting Started
 
@@ -86,7 +80,6 @@ Have fun trying some commands
 
 Type any valid Mycelium expression at the `>> ` prompt. The REPL currently tokenizes your input and prints the resulting token stream — useful for inspecting how the lexer processes code as the evaluator is being built.
 
----
 
 ## Language Syntax
 
@@ -197,7 +190,6 @@ val permissions: map[string][bool] = {
 | Assignment     | `=`                                   |
 | Logical/Unary  | `!`                                   |
 
----
 
 ## Project Architecture
 
@@ -252,8 +244,6 @@ Source Code (.myc)
       ▼
   [ LLVM Backend ]  ── (Future) Compile to native machine code
 ```
-
----
 
 ## Roadmap
 
