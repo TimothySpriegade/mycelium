@@ -15,4 +15,10 @@ impl Node for Expression {
             Expression::Identifier(ident) => ident.token_literal(),
         }
     }
+
+    fn string(&self) -> String {
+        match self {
+            Expression::Identifier(ident) => ident.string(),
+        }
+    }
 }

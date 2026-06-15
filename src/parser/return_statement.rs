@@ -15,10 +15,10 @@ impl Parser {
 
         Some(ReturnStatement {
             token: Token::RETURN,
-            return_value: Expression::Identifier(Identifier {
+            return_value: Some(Expression::Identifier(Identifier {
                 token: Token::RETURN,
                 value: "TODO".to_string(),
-            }),
+            })),
         })
     }
 }

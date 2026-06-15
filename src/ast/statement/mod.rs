@@ -1,6 +1,7 @@
 pub mod return_stmt;
 pub mod val;
 pub mod var;
+mod expression_stmt;
 
 pub use return_stmt::ReturnStatement;
 pub use val::ValDefinitionStatement;
@@ -24,6 +25,15 @@ impl Node for Statement {
             Statement::Val(stmt) => stmt.token_literal(),
             Statement::Return(stmt) => stmt.token_literal(),
             Statement::Identifier(ident) => ident.token_literal(),
+        }
+    }
+
+    fn string(&self) -> String {
+        match self {
+            Statement::Var(stmt) => stmt.string(),
+            Statement::Val(stmt) => stmt.string(),
+            Statement::Return(stmt) => stmt.string(),
+            Statement::Identifier(ident) => ident.string(),
         }
     }
 }

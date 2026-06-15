@@ -11,6 +11,19 @@ pub struct VarDefinitionStatement {
 
 impl Node for VarDefinitionStatement {
     fn token_literal(&self) -> String {
-        "var".to_string()
+        self.token.literal()
+    }
+
+    fn string(&self) -> String {
+        let mut out = String::new();
+        out.push_str(&self.token_literal());
+        out.push_str(" ");
+        out.push_str(&self.name.string());
+        out.push_str(": ");
+        out.push_str(&self.ty.string());
+        out.push_str(" = ");
+        out.push_str(&self.value.string());
+        out.push_str(";"); 
+        out
     }
 }

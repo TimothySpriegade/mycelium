@@ -11,4 +11,8 @@ impl Node for Identifier {
     fn token_literal(&self) -> String {
         self.value.clone()
     }
+
+    fn string(&self) -> String {
+        self.value.clone()
+    }
 }

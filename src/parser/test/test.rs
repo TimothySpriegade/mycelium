@@ -1,6 +1,10 @@
 #[cfg(test)]
 mod tests {
-    use crate::ast::{Node, Statement};
+    use crate::ast::{
+        Expression, Identifier, Node, Program, Statement, ValDefinitionStatement,
+        VarDefinitionStatement,
+    };
+    use crate::token::token::Token;
     use crate::lexer::lexer::Lexer;
     use crate::parser::Parser;
     use crate::types::types::is_valid_type;
@@ -160,4 +164,61 @@ mod tests {
             panic!("statement is not Statement::Val, got {:?}", statement);
         }
     }
+
+    #[test]
+    fn test_string_var() {
+        let program = Program {
+            statements: vec![Statement::Var(VarDefinitionStatement {
+                token: Token::VAR,
+                name: Identifier {
+                    token: Token::IDENT("myVar".to_string()),
+                    value: "myVar".to_string(),
+                },
+                ty: Identifier {
+                    token: Token::IDENT("int".to_string()),
+                    value: "int".to_string(),
+                },
+                value: Expression::Identifier(Identifier {
+                    token: Token::IDENT("anotherVar".to_string()),
+                    value: "anotherVar".to_string(),
+                }),
+            })],
+        };
+
+        assert_eq!(
+            program.string(),
+            "var myVar: int = anotherVar;",
+            "program.string() wrong. got={}",
+            program.string()
+        );
+    }
+
+    #[test]
+    fn test_string_val() {
+        let program = Program {
+            statements: vec![Statement::Val(ValDefinitionStatement {
+                token: Token::VAL,
+                name: Identifier {
+                    token: Token::IDENT("greeting".to_string()),
+                    value: "greeting".to_string(),
+                },
+                ty: Identifier {
+                    token: Token::IDENT("string".to_string()),
+                    value: "string".to_string(),
+                },
+                value: Expression::Identifier(Identifier {
+                    token: Token::IDENT("anotherVar".to_string()),
+                    value: "anotherVar".to_string(),
+                }),
+            })],
+        };
+
+        assert_eq!(
+            program.string(),
+            "val greeting: string = anotherVar;",
+            "program.string() wrong. got={}",
+            program.string()
+        );
+    }
 }
+

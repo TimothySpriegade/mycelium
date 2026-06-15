@@ -6,6 +6,7 @@ pub use statement::*;
 
 pub trait Node {
     fn token_literal(&self) -> String;
+    fn string(&self) -> String;
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -18,5 +19,9 @@ impl Node for Program {
         self.statements
             .first()
             .map_or_else(String::new, |stmt| stmt.token_literal())
+    }
+
+    fn string(&self) -> String {
+        self.statements.iter().map(|stmt| stmt.string()).collect::<String>()
     }
 }

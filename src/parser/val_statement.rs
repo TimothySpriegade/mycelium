@@ -38,7 +38,7 @@ impl Parser {
         }
 
         Some(ValDefinitionStatement {
-            token: Token::VAR,
+            token: Token::VAL,
             name,
             ty,
             value: temp_expression,
